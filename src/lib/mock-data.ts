@@ -1,0 +1,97 @@
+import { Invoice } from '@/schemas/invoice.schema';
+
+export const MOCK_INVOICES: Invoice[] = [
+    {
+        id: '1',
+        invoiceNumber: 'INV-001',
+        client: 'Acme Corp',
+        project: 'Website Redesign',
+        issueDate: new Date('2025-12-01'),
+        dueDate: new Date('2025-12-15'),
+        status: 'PAID',
+        items: [{ description: 'Web Design', quantity: 1, price: 5000 }],
+        totalAmount: 5000,
+        notes: 'Thank you for your business!',
+    },
+    {
+        id: '2',
+        invoiceNumber: 'INV-002',
+        client: 'Globex Inc',
+        project: 'SEO Campaign',
+        issueDate: new Date('2025-12-10'),
+        dueDate: new Date('2025-12-24'),
+        status: 'SENT',
+        items: [{ description: 'SEO Consultation', quantity: 10, price: 150 }],
+        totalAmount: 1500,
+        notes: 'Payment due within 14 days.',
+    },
+    {
+        id: '3',
+        invoiceNumber: 'INV-003',
+        client: 'Soylent Corp',
+        project: 'Mobile App',
+        issueDate: new Date('2025-12-20'),
+        dueDate: new Date('2026-01-03'),
+        status: 'DRAFT',
+        items: [{ description: 'App Development', quantity: 1, price: 12000 }],
+        totalAmount: 12000,
+        notes: '',
+    },
+    {
+        id: '4',
+        invoiceNumber: 'INV-004',
+        client: 'Initech',
+        project: 'Annual Maintenance',
+        issueDate: new Date('2025-11-20'),
+        dueDate: new Date('2025-12-04'),
+        status: 'OVERDUE',
+        items: [{ description: 'Maintenance', quantity: 1, price: 500 }],
+        totalAmount: 500,
+        notes: 'Please pay immediately.',
+    },
+];
+
+import { Service } from '@/schemas/service.schema';
+
+export const MOCK_SERVICES: Service[] = [
+    {
+        id: '1',
+        name: 'Web Development',
+        description: 'Full-stack web application development',
+        status: 'ACTIVE',
+        createdAt: new Date('2025-01-01'),
+        updatedAt: new Date('2025-01-01'),
+    },
+    {
+        id: '2',
+        name: 'UI/UX Design',
+        description: 'User interface and user experience design',
+        status: 'ACTIVE',
+        createdAt: new Date('2025-01-02'),
+        updatedAt: new Date('2025-01-02'),
+    },
+    {
+        id: '3',
+        name: 'SEO Optimization',
+        description: 'Search engine optimization services',
+        status: 'ACTIVE',
+        createdAt: new Date('2025-01-03'),
+        updatedAt: new Date('2025-01-03'),
+    },
+    {
+        id: '4',
+        name: 'Mobile App Development',
+        description: 'Native and cross-platform mobile app development',
+        status: 'INACTIVE',
+        createdAt: new Date('2025-01-04'),
+        updatedAt: new Date('2025-01-04'),
+    },
+    {
+        id: '5',
+        name: 'Content Writing',
+        description: 'Blog posts and website content',
+        status: 'ACTIVE',
+        createdAt: new Date('2025-01-05'),
+        updatedAt: new Date('2025-01-05'),
+    },
+];
