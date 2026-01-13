@@ -50,6 +50,7 @@ export default function EditExpensePage({ params }: EditExpensePageProps) {
 
     const [isLoading, setIsLoading] = useState(true);
     const [expense, setExpense] = useState<ExpenseFormData | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         const loadExpense = async () => {

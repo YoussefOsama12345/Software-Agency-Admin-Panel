@@ -122,8 +122,8 @@ export function ExpenseForm({
                                             placeholder="0.00"
                                             className="pl-7"
                                             {...field}
-                                            value={field.value || ''}
-                                            onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                                            value={(field.value as number) || ''}
+                                            onChange={(e) => field.onChange(e.target.value)}
                                         />
                                     </div>
                                 </FormControl>

@@ -6,7 +6,9 @@ import { toast } from 'sonner';
 import { ResetPasswordForm } from '@/components/auth/ResetPasswordForm';
 import { ResetPasswordFormData } from '@/schemas/auth.schema';
 
-export default function ResetPasswordPage() {
+import { Suspense } from 'react';
+
+function ResetPasswordContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const email = searchParams.get('email') || '';
@@ -38,4 +40,12 @@ export default function ResetPasswordPage() {
     };
 
     return <ResetPasswordForm email={email} onSubmit={handleResetPassword} />;
+}
+
+export default function ResetPasswordPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ResetPasswordContent />
+        </Suspense>
+    );
 }

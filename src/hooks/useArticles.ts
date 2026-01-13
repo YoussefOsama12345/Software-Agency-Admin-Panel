@@ -17,6 +17,7 @@ const MOCK_ARTICLES: Article[] = [
         updatedAt: new Date().toISOString(),
         noIndex: false,
         noFollow: false,
+        language: 'en',
     },
     {
         id: '2',
@@ -33,6 +34,7 @@ const MOCK_ARTICLES: Article[] = [
         updatedAt: new Date().toISOString(),
         noIndex: false,
         noFollow: false,
+        language: 'en',
     },
     {
         id: '3',
@@ -49,6 +51,7 @@ const MOCK_ARTICLES: Article[] = [
         updatedAt: new Date().toISOString(),
         noIndex: false,
         noFollow: false,
+        language: 'en',
     }
 ];
 

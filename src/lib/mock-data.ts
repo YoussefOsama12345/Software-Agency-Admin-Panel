@@ -61,6 +61,7 @@ export const MOCK_SERVICES: Service[] = [
         status: 'ACTIVE',
         createdAt: new Date('2025-01-01'),
         updatedAt: new Date('2025-01-01'),
+        language: 'en',
     },
     {
         id: '2',
@@ -69,6 +70,7 @@ export const MOCK_SERVICES: Service[] = [
         status: 'ACTIVE',
         createdAt: new Date('2025-01-02'),
         updatedAt: new Date('2025-01-02'),
+        language: 'en',
     },
     {
         id: '3',
@@ -77,6 +79,7 @@ export const MOCK_SERVICES: Service[] = [
         status: 'ACTIVE',
         createdAt: new Date('2025-01-03'),
         updatedAt: new Date('2025-01-03'),
+        language: 'en',
     },
     {
         id: '4',
@@ -85,6 +88,7 @@ export const MOCK_SERVICES: Service[] = [
         status: 'INACTIVE',
         createdAt: new Date('2025-01-04'),
         updatedAt: new Date('2025-01-04'),
+        language: 'en',
     },
     {
         id: '5',
@@ -93,5 +97,6 @@ export const MOCK_SERVICES: Service[] = [
         status: 'ACTIVE',
         createdAt: new Date('2025-01-05'),
         updatedAt: new Date('2025-01-05'),
+        language: 'en',
     },
 ];

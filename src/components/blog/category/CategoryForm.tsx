@@ -36,7 +36,7 @@ interface CategoryFormProps {
     onSubmit: (data: CreateCategoryFormData) => Promise<void>;
     onDelete?: () => Promise<void>;
     isLoading?: boolean;
-    isSubmitting?: boolean;
+    isFormSubmitting?: boolean;
     submitLabel?: string;
     headerTitle: string;
     headerDescription: string;
@@ -47,13 +47,14 @@ export function CategoryForm({
     defaultValues,
     onSubmit,
     isLoading = false,
-    isSubmitting,
+    isFormSubmitting,
     onDelete,
     submitLabel,
     mode = 'create',
     headerTitle,
     headerDescription
 }: CategoryFormProps) {
+
     const router = useRouter();
 
     const initialValues: CreateCategoryFormData = {
@@ -409,8 +410,8 @@ export function CategoryForm({
                             >
                                 Cancel
                             </Button>
-                            <Button type="submit" disabled={isLoading || isDeleting || isSubmitting}>
-                                {isLoading || isSubmitting ? (
+                            <Button type="submit" disabled={isLoading || isDeleting || isFormSubmitting}>
+                                {isLoading || isFormSubmitting ? (
                                     <>
                                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                         Saving...

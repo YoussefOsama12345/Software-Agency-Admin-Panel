@@ -162,7 +162,8 @@ export default function EditPortfolioPage() {
                 <div className="lg:col-span-8">
                     <PortfolioForm
                         defaultValues={item}
-                        onSubmit={handleUpdate}
+                        onSubmit={handleSubmit}
+                        isLoading={isLoading}
                         onDelete={async () => {
                             await new Promise(resolve => setTimeout(resolve, 1000));
                             console.log('Deleting Portfolio project:', id);

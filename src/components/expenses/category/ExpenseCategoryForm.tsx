@@ -46,7 +46,7 @@ export function ExpenseCategoryForm({
 }: ExpenseCategoryFormProps) {
     const router = useRouter();
 
-    const form = useForm<ExpenseCategoryFormData>({
+    const form = useForm({
         resolver: zodResolver(expenseCategorySchema),
         defaultValues: {
             name: defaultValues?.name || '',
