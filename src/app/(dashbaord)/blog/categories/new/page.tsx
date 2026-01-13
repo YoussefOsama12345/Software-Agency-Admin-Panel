@@ -71,7 +71,7 @@ export default function NewCategoryPage() {
                 <div className="lg:col-span-8">
                     <CategoryForm
                         onSubmit={handleSubmit}
-                        isSubmitting={isLoading}
+                        isFormSubmitting={isLoading}
                         mode="create"
                         headerTitle="Category Details"
                         headerDescription="Fill in the information to create a new category"
