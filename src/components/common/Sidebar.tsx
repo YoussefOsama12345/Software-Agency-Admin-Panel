@@ -18,9 +18,10 @@ import {
   Receipt,
   Settings,
   Building2,
-  Calendar,
-  BarChart3,
-  ClipboardCheck,
+  Share2,
+  BarChart2,
+  ChevronRight,
+  Mail,
 } from "lucide-react"
 
 import {
@@ -34,9 +35,17 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarRail,
   SidebarSeparator,
 } from "@/components/ui/sidebar"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 
 const mainNavItems = [
   { title: "Dashboard", href: "/", icon: LayoutDashboard },
@@ -61,9 +70,9 @@ const contentNavItems = [
   { title: "Messages", href: "/messages", icon: MessageSquare },
 ]
 
-const socialNavItems = [
-  { title: "Posts", href: "/social", icon: Calendar },
-  { title: "Analytics", href: "/social/analytics", icon: BarChart3 },
+const marketingNavItems = [
+  { title: "Posts", href: "/social", icon: Share2 },
+  { title: "Email", href: "/email", icon: Mail },
 ]
 
 const settingsNavItems = [
@@ -75,8 +84,6 @@ export function AppSidebar() {
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/"
-    // Prevent /social from being active when on /social/analytics
-    if (href === "/social" && pathname.startsWith("/social/analytics")) return false
     return pathname.startsWith(href)
   }
 
@@ -128,20 +135,58 @@ export function AppSidebar() {
           <SidebarGroupLabel>Content</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {contentNavItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
+              {contentNavItems.map((item) =>
+                // @ts-ignore
+                item.items ? (
+                  <Collapsible
+                    key={item.title}
                     asChild
-                    isActive={isActive(item.href)}
-                    tooltip={item.title}
+                    // @ts-ignore
+                    defaultOpen={item.items.some((sub) => isActive(sub.href))}
+                    className="group/collapsible"
                   >
-                    <Link href={item.href}>
-                      {item.icon && <item.icon />}
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+                    <SidebarMenuItem>
+                      <CollapsibleTrigger asChild>
+                        <SidebarMenuButton tooltip={item.title}>
+                          {item.icon && <item.icon />}
+                          <span>{item.title}</span>
+                          <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                        </SidebarMenuButton>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <SidebarMenuSub>
+                          {/* @ts-ignore */}
+                          {item.items.map((subItem) => (
+                            <SidebarMenuSubItem key={subItem.title}>
+                              <SidebarMenuSubButton
+                                asChild
+                                isActive={isActive(subItem.href)}
+                              >
+                                <Link href={subItem.href}>
+                                  <span>{subItem.title}</span>
+                                </Link>
+                              </SidebarMenuSubButton>
+                            </SidebarMenuSubItem>
+                          ))}
+                        </SidebarMenuSub>
+                      </CollapsibleContent>
+                    </SidebarMenuItem>
+                  </Collapsible>
+                ) : (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isActive(item.href)}
+                      tooltip={item.title}
+                    >
+                      <Link href={item.href}>
+                        {item.icon && <item.icon />}
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              )}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -149,10 +194,10 @@ export function AppSidebar() {
         <SidebarSeparator className="mx-0" />
 
         <SidebarGroup>
-          <SidebarGroupLabel>Social Media</SidebarGroupLabel>
+          <SidebarGroupLabel>Marketing</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {socialNavItems.map((item) => (
+              {marketingNavItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
@@ -160,7 +205,7 @@ export function AppSidebar() {
                     tooltip={item.title}
                   >
                     <Link href={item.href}>
-                      {item.icon && <item.icon />}
+                      <item.icon />
                       <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>

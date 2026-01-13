@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Plus } from 'lucide-react';
+import { Plus, BarChart2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { PageHeader } from '@/components/common/PageHeader';
-import { SocialStats, SocialToolbar, SocialPostsGrid, SocialPostsTable } from '@/components/social';
+import { SocialStats, SocialToolbar, SocialPostsGrid, SocialPostsTable } from '@/components//social';
 import { SocialPost } from '@/schemas/social.schema';
 
 // Mock data
@@ -88,12 +88,20 @@ export default function SocialPage() {
                 title="Social Media"
                 description="Manage and schedule your social media posts."
             >
-                <Link href="/social/new">
-                    <Button>
-                        <Plus className="mr-2 h-4 w-4" />
-                        New Post
-                    </Button>
-                </Link>
+                <div className="flex gap-2">
+                    <Link href="/social/analytics">
+                        <Button variant="outline">
+                            <BarChart2 className="mr-2 h-4 w-4" />
+                            Analytics
+                        </Button>
+                    </Link>
+                    <Link href="/social/new">
+                        <Button>
+                            <Plus className="mr-2 h-4 w-4" />
+                            New Post
+                        </Button>
+                    </Link>
+                </div>
             </PageHeader>
 
             <SocialStats

@@ -6,7 +6,6 @@ import {
     TrendingDown,
     Eye,
     Heart,
-    Music2,
 } from 'lucide-react';
 import {
     RiFacebookFill,
@@ -15,6 +14,7 @@ import {
     RiLinkedinFill,
     RiYoutubeFill,
 } from 'react-icons/ri';
+import { Music2 } from 'lucide-react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';

@@ -21,3 +21,12 @@ export interface CreateUser {
     phone?: string;
     role: Role;
 }
+
+export interface UpdateUser {
+    id: string;
+    username?: string;
+    email?: string;
+    password?: string;
+    phone?: string;
+    role?: Role;
+}
