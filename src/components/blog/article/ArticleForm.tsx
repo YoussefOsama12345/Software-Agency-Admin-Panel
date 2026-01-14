@@ -163,81 +163,380 @@ export function ArticleForm({
 
                             {/* General Tab */}
                             <TabsContent value="general" className="space-y-6 mt-6">
-                                <Card className="border-0 shadow-none">
-                                    <CardContent className="pt-6 space-y-6">
-                                        <div className="grid gap-6 md:grid-cols-2">
-                                            {lang === 'en' ? (
-                                                <FormField
-                                                    control={form.control}
-                                                    name="title"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel>Title (English) *</FormLabel>
-                                                            <FormControl>
-                                                                <Input
-                                                                    placeholder="Article title"
-                                                                    {...field}
-                                                                    onChange={(e) => {
-                                                                        field.onChange(e);
-                                                                        if (mode === 'create') {
-                                                                            const slug = e.target.value
-                                                                                .toLowerCase()
-                                                                                .replace(/[^a-z0-9]+/g, '-')
-                                                                                .replace(/^-+|-+$/g, '');
-                                                                            form.setValue('slug', slug, { shouldValidate: true });
-                                                                        }
-                                                                    }}
-                                                                />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                            ) : (
-                                                <FormField
-                                                    control={form.control}
-                                                    name="title_ar"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel>Title (Arabic)</FormLabel>
-                                                            <FormControl>
-                                                                <Input
-                                                                    placeholder="عنوان المقال"
-                                                                    className="text-right"
-                                                                    dir="rtl"
-                                                                    {...field}
-                                                                    value={field.value || ''}
-                                                                />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
+                                <div className="grid gap-6 md:grid-cols-2">
+                                    {lang === 'en' ? (
+                                        <FormField
+                                            control={form.control}
+                                            name="title"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Title (English) *</FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            placeholder="Article title"
+                                                            {...field}
+                                                            onChange={(e) => {
+                                                                field.onChange(e);
+                                                                if (mode === 'create') {
+                                                                    const slug = e.target.value
+                                                                        .toLowerCase()
+                                                                        .replace(/[^a-z0-9]+/g, '-')
+                                                                        .replace(/^-+|-+$/g, '');
+                                                                    form.setValue('slug', slug, { shouldValidate: true });
+                                                                }
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
                                             )}
-                                            <FormField
-                                                control={form.control}
-                                                name="slug"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel>Slug</FormLabel>
-                                                        <FormControl>
-                                                            <Input placeholder="Leave empty to auto-generate from title." {...field} />
-                                                        </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        </div>
+                                        />
+                                    ) : (
+                                        <FormField
+                                            control={form.control}
+                                            name="title_ar"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Title (Arabic)</FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            placeholder="عنوان المقال"
+                                                            className="text-right"
+                                                            dir="rtl"
+                                                            {...field}
+                                                            value={field.value || ''}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    )}
+                                    <FormField
+                                        control={form.control}
+                                        name="slug"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Slug</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="Leave empty to auto-generate from title." {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
 
+                                {lang === 'en' ? (
+                                    <FormField
+                                        control={form.control}
+                                        name="description"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Description (English) *</FormLabel>
+                                                <FormControl>
+                                                    <Textarea placeholder="Short description for lists and previews" className="h-20" {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                ) : (
+                                    <FormField
+                                        control={form.control}
+                                        name="description_ar"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Description (Arabic)</FormLabel>
+                                                <FormControl>
+                                                    <Textarea
+                                                        placeholder="وصف قصير للمقال"
+                                                        className="h-20 text-right"
+                                                        dir="rtl"
+                                                        {...field}
+                                                        value={field.value || ''}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                )}
+
+                                {lang === 'en' ? (
+                                    <FormField
+                                        control={form.control}
+                                        name="content"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Content (English) *</FormLabel>
+                                                <FormControl>
+                                                    <RichTextEditor
+                                                        value={field.value}
+                                                        onChange={field.onChange}
+                                                        placeholder="Write your article content here..."
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                ) : (
+                                    <FormField
+                                        control={form.control}
+                                        name="content_ar"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Content (Arabic)</FormLabel>
+                                                <FormControl>
+                                                    <RichTextEditor
+                                                        value={field.value || ''}
+                                                        onChange={field.onChange}
+                                                        placeholder="اكتب محتوى المقال بالتفصيل هنا..."
+                                                        dir="rtl"
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                )}
+
+                                <div className="grid gap-6 md:grid-cols-2">
+                                    <FormField
+                                        control={form.control}
+                                        name="categoryId"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>{lang === 'ar' ? 'الفئة' : 'Category'} *</FormLabel>
+                                                <Select
+                                                    onValueChange={field.onChange}
+                                                    defaultValue={field.value}
+                                                    dir={lang === 'ar' ? 'rtl' : 'ltr'}
+                                                >
+                                                    <FormControl>
+                                                        <SelectTrigger className={`w-full ${lang === 'ar' ? 'text-right' : ''}`}>
+                                                            <SelectValue placeholder={lang === 'ar' ? 'اختر فئة' : 'Select category'} />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent>
+                                                        {mockCategories.map((category) => (
+                                                            <SelectItem key={category.id} value={category.id} className={lang === 'ar' ? 'text-right' : ''}>
+                                                                {lang === 'ar' ? category.name_ar : category.name}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="status"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>{lang === 'ar' ? 'الحالة' : 'Status'}</FormLabel>
+                                                <Select
+                                                    onValueChange={field.onChange}
+                                                    defaultValue={field.value}
+                                                    dir={lang === 'ar' ? 'rtl' : 'ltr'}
+                                                >
+                                                    <FormControl>
+                                                        <SelectTrigger className={`w-full ${lang === 'ar' ? 'text-right' : ''}`}>
+                                                            <SelectValue placeholder={lang === 'ar' ? 'اختر الحالة' : 'Select status'} />
+                                                        </SelectTrigger>
+                                                    </FormControl>
+                                                    <SelectContent>
+                                                        <SelectItem value="DRAFT" className={lang === 'ar' ? 'text-right' : ''}>
+                                                            {lang === 'ar' ? 'مسودة' : 'Draft'}
+                                                        </SelectItem>
+                                                        <SelectItem value="PUBLISHED" className={lang === 'ar' ? 'text-right' : ''}>
+                                                            {lang === 'ar' ? 'منشور' : 'Published'}
+                                                        </SelectItem>
+                                                        <SelectItem value="ARCHIVED" className={lang === 'ar' ? 'text-right' : ''}>
+                                                            {lang === 'ar' ? 'مؤرشف' : 'Archived'}
+                                                        </SelectItem>
+                                                    </SelectContent>
+                                                </Select>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+
+                                <FormField
+                                    control={form.control}
+                                    name="image"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Featured Image URL *</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="https://..." {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+                                <FormField
+                                    control={form.control}
+                                    name="relatedArticles"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Related Articles</FormLabel>
+                                            <FormControl>
+                                                <RelatedArticleSelector
+                                                    value={field.value || []}
+                                                    onChange={field.onChange}
+                                                />
+                                            </FormControl>
+                                            <FormDescription>
+                                                Select articles related to this topic.
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </TabsContent>
+
+                            {/* SEO Tab */}
+                            <TabsContent value="seo" className="space-y-6 mt-6">
+                                <div className="grid gap-6 md:grid-cols-2">
+                                    {lang === 'en' ? (
+                                        <FormField
+                                            control={form.control}
+                                            name="metaTitle"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Meta Title (English)</FormLabel>
+                                                    <FormControl>
+                                                        <Input placeholder="SEO Title" {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    ) : (
+                                        <FormField
+                                            control={form.control}
+                                            name="metaTitle_ar"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Meta Title (Arabic)</FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            placeholder="عنوان SEO"
+                                                            className="text-right"
+                                                            dir="rtl"
+                                                            {...field}
+                                                            value={field.value || ''}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    )}
+                                    <FormField
+                                        control={form.control}
+                                        name="canonicalUrl"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Canonical URL</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="https://..." {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+
+                                {lang === 'en' ? (
+                                    <FormField
+                                        control={form.control}
+                                        name="metaDescription"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Meta Description (English)</FormLabel>
+                                                <FormControl>
+                                                    <Textarea placeholder="SEO Description" className="h-20" {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                ) : (
+                                    <FormField
+                                        control={form.control}
+                                        name="metaDescription_ar"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>Meta Description (Arabic)</FormLabel>
+                                                <FormControl>
+                                                    <Textarea
+                                                        placeholder="وصف SEO"
+                                                        className="h-20 text-right"
+                                                        dir="rtl"
+                                                        {...field}
+                                                        value={field.value || ''}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                )}
+
+                                <div className="flex gap-8">
+                                    <FormField
+                                        control={form.control}
+                                        name="noIndex"
+                                        render={({ field }) => (
+                                            <FormItem className="flex flex-row items-center gap-2 space-y-0">
+                                                <FormControl>
+                                                    <Switch checked={field.value} onCheckedChange={field.onChange} />
+                                                </FormControl>
+                                                <div className="space-y-0.5">
+                                                    <FormLabel>No Index</FormLabel>
+                                                    <FormDescription>Tell search engines not to index this page.</FormDescription>
+                                                </div>
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="noFollow"
+                                        render={({ field }) => (
+                                            <FormItem className="flex flex-row items-center gap-2 space-y-0">
+                                                <FormControl>
+                                                    <Switch checked={field.value} onCheckedChange={field.onChange} />
+                                                </FormControl>
+                                                <div className="space-y-0.5">
+                                                    <FormLabel>No Follow</FormLabel>
+                                                    <FormDescription>Tell search engines not to follow links.</FormDescription>
+                                                </div>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </TabsContent>
+
+                            {/* Social Tab */}
+                            <TabsContent value="social" className="space-y-6 mt-6">
+                                <div className="space-y-4">
+                                    <h3 className="text-lg font-medium">Open Graph (Facebook / LinkedIn)</h3>
+                                    <div className="grid gap-6 md:grid-cols-2">
                                         {lang === 'en' ? (
                                             <FormField
                                                 control={form.control}
-                                                name="description"
+                                                name="ogTitle"
                                                 render={({ field }) => (
                                                     <FormItem>
-                                                        <FormLabel>Description (English) *</FormLabel>
+                                                        <FormLabel>OG Title (English)</FormLabel>
                                                         <FormControl>
-                                                            <Textarea placeholder="Short description for lists and previews" className="h-20" {...field} />
+                                                            <Input placeholder="OG Title" {...field} />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -246,14 +545,14 @@ export function ArticleForm({
                                         ) : (
                                             <FormField
                                                 control={form.control}
-                                                name="description_ar"
+                                                name="ogTitle_ar"
                                                 render={({ field }) => (
                                                     <FormItem>
-                                                        <FormLabel>Description (Arabic)</FormLabel>
+                                                        <FormLabel>OG Title (Arabic)</FormLabel>
                                                         <FormControl>
-                                                            <Textarea
-                                                                placeholder="وصف قصير للمقال"
-                                                                className="h-20 text-right"
+                                                            <Input
+                                                                placeholder="عنوان OG"
+                                                                className="text-right"
                                                                 dir="rtl"
                                                                 {...field}
                                                                 value={field.value || ''}
@@ -264,115 +563,12 @@ export function ArticleForm({
                                                 )}
                                             />
                                         )}
-
-                                        {lang === 'en' ? (
-                                            <FormField
-                                                control={form.control}
-                                                name="content"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel>Content (English) *</FormLabel>
-                                                        <FormControl>
-                                                            <RichTextEditor
-                                                                value={field.value}
-                                                                onChange={field.onChange}
-                                                                placeholder="Write your article content here..."
-                                                            />
-                                                        </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        ) : (
-                                            <FormField
-                                                control={form.control}
-                                                name="content_ar"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel>Content (Arabic)</FormLabel>
-                                                        <FormControl>
-                                                            <RichTextEditor
-                                                                value={field.value || ''}
-                                                                onChange={field.onChange}
-                                                                placeholder="اكتب محتوى المقال بالتفصيل هنا..."
-                                                                dir="rtl"
-                                                            />
-                                                        </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        )}
-
-                                        <div className="grid gap-6 md:grid-cols-2">
-                                            <FormField
-                                                control={form.control}
-                                                name="categoryId"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel>{lang === 'ar' ? 'الفئة' : 'Category'} *</FormLabel>
-                                                        <Select
-                                                            onValueChange={field.onChange}
-                                                            defaultValue={field.value}
-                                                            dir={lang === 'ar' ? 'rtl' : 'ltr'}
-                                                        >
-                                                            <FormControl>
-                                                                <SelectTrigger className={`w-full ${lang === 'ar' ? 'text-right' : ''}`}>
-                                                                    <SelectValue placeholder={lang === 'ar' ? 'اختر فئة' : 'Select category'} />
-                                                                </SelectTrigger>
-                                                            </FormControl>
-                                                            <SelectContent>
-                                                                {mockCategories.map((category) => (
-                                                                    <SelectItem key={category.id} value={category.id} className={lang === 'ar' ? 'text-right' : ''}>
-                                                                        {lang === 'ar' ? category.name_ar : category.name}
-                                                                    </SelectItem>
-                                                                ))}
-                                                            </SelectContent>
-                                                        </Select>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                            <FormField
-                                                control={form.control}
-                                                name="status"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel>{lang === 'ar' ? 'الحالة' : 'Status'}</FormLabel>
-                                                        <Select
-                                                            onValueChange={field.onChange}
-                                                            defaultValue={field.value}
-                                                            dir={lang === 'ar' ? 'rtl' : 'ltr'}
-                                                        >
-                                                            <FormControl>
-                                                                <SelectTrigger className={`w-full ${lang === 'ar' ? 'text-right' : ''}`}>
-                                                                    <SelectValue placeholder={lang === 'ar' ? 'اختر الحالة' : 'Select status'} />
-                                                                </SelectTrigger>
-                                                            </FormControl>
-                                                            <SelectContent>
-                                                                <SelectItem value="DRAFT" className={lang === 'ar' ? 'text-right' : ''}>
-                                                                    {lang === 'ar' ? 'مسودة' : 'Draft'}
-                                                                </SelectItem>
-                                                                <SelectItem value="PUBLISHED" className={lang === 'ar' ? 'text-right' : ''}>
-                                                                    {lang === 'ar' ? 'منشور' : 'Published'}
-                                                                </SelectItem>
-                                                                <SelectItem value="ARCHIVED" className={lang === 'ar' ? 'text-right' : ''}>
-                                                                    {lang === 'ar' ? 'مؤرشف' : 'Archived'}
-                                                                </SelectItem>
-                                                            </SelectContent>
-                                                        </Select>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        </div>
-
                                         <FormField
                                             control={form.control}
-                                            name="image"
+                                            name="ogImage"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Featured Image URL *</FormLabel>
+                                                    <FormLabel>OG Image URL</FormLabel>
                                                     <FormControl>
                                                         <Input placeholder="https://..." {...field} />
                                                     </FormControl>
@@ -380,94 +576,56 @@ export function ArticleForm({
                                                 </FormItem>
                                             )}
                                         />
-
+                                    </div>
+                                    {lang === 'en' ? (
                                         <FormField
                                             control={form.control}
-                                            name="relatedArticles"
+                                            name="ogDescription"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Related Articles</FormLabel>
+                                                    <FormLabel>OG Description (English)</FormLabel>
                                                     <FormControl>
-                                                        <RelatedArticleSelector
-                                                            value={field.value || []}
-                                                            onChange={field.onChange}
-                                                        />
+                                                        <Textarea placeholder="OG Description" className="h-20" {...field} />
                                                     </FormControl>
-                                                    <FormDescription>
-                                                        Select articles related to this topic.
-                                                    </FormDescription>
                                                     <FormMessage />
                                                 </FormItem>
                                             )}
                                         />
-                                    </CardContent>
-                                </Card>
-                            </TabsContent>
-
-                            {/* SEO Tab */}
-                            <TabsContent value="seo" className="space-y-6 mt-6">
-                                <Card className="border-0 shadow-none">
-                                    <CardContent className="pt-6 space-y-6">
-                                        <div className="grid gap-6 md:grid-cols-2">
-                                            {lang === 'en' ? (
-                                                <FormField
-                                                    control={form.control}
-                                                    name="metaTitle"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel>Meta Title (English)</FormLabel>
-                                                            <FormControl>
-                                                                <Input placeholder="SEO Title" {...field} />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                            ) : (
-                                                <FormField
-                                                    control={form.control}
-                                                    name="metaTitle_ar"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel>Meta Title (Arabic)</FormLabel>
-                                                            <FormControl>
-                                                                <Input
-                                                                    placeholder="عنوان SEO"
-                                                                    className="text-right"
-                                                                    dir="rtl"
-                                                                    {...field}
-                                                                    value={field.value || ''}
-                                                                />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
+                                    ) : (
+                                        <FormField
+                                            control={form.control}
+                                            name="ogDescription_ar"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>OG Description (Arabic)</FormLabel>
+                                                    <FormControl>
+                                                        <Textarea
+                                                            placeholder="وصف OG"
+                                                            className="h-20 text-right"
+                                                            dir="rtl"
+                                                            {...field}
+                                                            value={field.value || ''}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
                                             )}
-                                            <FormField
-                                                control={form.control}
-                                                name="canonicalUrl"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel>Canonical URL</FormLabel>
-                                                        <FormControl>
-                                                            <Input placeholder="https://..." {...field} />
-                                                        </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        </div>
+                                        />
+                                    )}
+                                </div>
 
+                                <div className="space-y-4">
+                                    <h3 className="text-lg font-medium">Twitter Card</h3>
+                                    <div className="grid gap-6 md:grid-cols-2">
                                         {lang === 'en' ? (
                                             <FormField
                                                 control={form.control}
-                                                name="metaDescription"
+                                                name="twitterTitle"
                                                 render={({ field }) => (
                                                     <FormItem>
-                                                        <FormLabel>Meta Description (English)</FormLabel>
+                                                        <FormLabel>Twitter Title (English)</FormLabel>
                                                         <FormControl>
-                                                            <Textarea placeholder="SEO Description" className="h-20" {...field} />
+                                                            <Input placeholder="Twitter Title" {...field} />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -476,14 +634,14 @@ export function ArticleForm({
                                         ) : (
                                             <FormField
                                                 control={form.control}
-                                                name="metaDescription_ar"
+                                                name="twitterTitle_ar"
                                                 render={({ field }) => (
                                                     <FormItem>
-                                                        <FormLabel>Meta Description (Arabic)</FormLabel>
+                                                        <FormLabel>Twitter Title (Arabic)</FormLabel>
                                                         <FormControl>
-                                                            <Textarea
-                                                                placeholder="وصف SEO"
-                                                                className="h-20 text-right"
+                                                            <Input
+                                                                placeholder="عنوان تويتر"
+                                                                className="text-right"
                                                                 dir="rtl"
                                                                 {...field}
                                                                 value={field.value || ''}
@@ -494,226 +652,56 @@ export function ArticleForm({
                                                 )}
                                             />
                                         )}
-
-                                        <div className="flex gap-8">
-                                            <FormField
-                                                control={form.control}
-                                                name="noIndex"
-                                                render={({ field }) => (
-                                                    <FormItem className="flex flex-row items-center gap-2 space-y-0">
-                                                        <FormControl>
-                                                            <Switch checked={field.value} onCheckedChange={field.onChange} />
-                                                        </FormControl>
-                                                        <div className="space-y-0.5">
-                                                            <FormLabel>No Index</FormLabel>
-                                                            <FormDescription>Tell search engines not to index this page.</FormDescription>
-                                                        </div>
-                                                    </FormItem>
-                                                )}
-                                            />
-                                            <FormField
-                                                control={form.control}
-                                                name="noFollow"
-                                                render={({ field }) => (
-                                                    <FormItem className="flex flex-row items-center gap-2 space-y-0">
-                                                        <FormControl>
-                                                            <Switch checked={field.value} onCheckedChange={field.onChange} />
-                                                        </FormControl>
-                                                        <div className="space-y-0.5">
-                                                            <FormLabel>No Follow</FormLabel>
-                                                            <FormDescription>Tell search engines not to follow links.</FormDescription>
-                                                        </div>
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            </TabsContent>
-
-                            {/* Social Tab */}
-                            <TabsContent value="social" className="space-y-6 mt-6">
-                                <Card className="border-0 shadow-none">
-                                    <CardContent className="pt-6 space-y-6">
-                                        <div className="space-y-4">
-                                            <h3 className="text-lg font-medium">Open Graph (Facebook / LinkedIn)</h3>
-                                            <div className="grid gap-6 md:grid-cols-2">
-                                                {lang === 'en' ? (
-                                                    <FormField
-                                                        control={form.control}
-                                                        name="ogTitle"
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>OG Title (English)</FormLabel>
-                                                                <FormControl>
-                                                                    <Input placeholder="OG Title" {...field} />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                ) : (
-                                                    <FormField
-                                                        control={form.control}
-                                                        name="ogTitle_ar"
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>OG Title (Arabic)</FormLabel>
-                                                                <FormControl>
-                                                                    <Input
-                                                                        placeholder="عنوان OG"
-                                                                        className="text-right"
-                                                                        dir="rtl"
-                                                                        {...field}
-                                                                        value={field.value || ''}
-                                                                    />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                )}
-                                                <FormField
-                                                    control={form.control}
-                                                    name="ogImage"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel>OG Image URL</FormLabel>
-                                                            <FormControl>
-                                                                <Input placeholder="https://..." {...field} />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                            </div>
-                                            {lang === 'en' ? (
-                                                <FormField
-                                                    control={form.control}
-                                                    name="ogDescription"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel>OG Description (English)</FormLabel>
-                                                            <FormControl>
-                                                                <Textarea placeholder="OG Description" className="h-20" {...field} />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                            ) : (
-                                                <FormField
-                                                    control={form.control}
-                                                    name="ogDescription_ar"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel>OG Description (Arabic)</FormLabel>
-                                                            <FormControl>
-                                                                <Textarea
-                                                                    placeholder="وصف OG"
-                                                                    className="h-20 text-right"
-                                                                    dir="rtl"
-                                                                    {...field}
-                                                                    value={field.value || ''}
-                                                                />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
+                                        <FormField
+                                            control={form.control}
+                                            name="twitterImage"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Twitter Image URL</FormLabel>
+                                                    <FormControl>
+                                                        <Input placeholder="https://..." {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
                                             )}
-                                        </div>
-
-                                        <div className="space-y-4">
-                                            <h3 className="text-lg font-medium">Twitter Card</h3>
-                                            <div className="grid gap-6 md:grid-cols-2">
-                                                {lang === 'en' ? (
-                                                    <FormField
-                                                        control={form.control}
-                                                        name="twitterTitle"
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>Twitter Title (English)</FormLabel>
-                                                                <FormControl>
-                                                                    <Input placeholder="Twitter Title" {...field} />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                ) : (
-                                                    <FormField
-                                                        control={form.control}
-                                                        name="twitterTitle_ar"
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <FormLabel>Twitter Title (Arabic)</FormLabel>
-                                                                <FormControl>
-                                                                    <Input
-                                                                        placeholder="عنوان تويتر"
-                                                                        className="text-right"
-                                                                        dir="rtl"
-                                                                        {...field}
-                                                                        value={field.value || ''}
-                                                                    />
-                                                                </FormControl>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                )}
-                                                <FormField
-                                                    control={form.control}
-                                                    name="twitterImage"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel>Twitter Image URL</FormLabel>
-                                                            <FormControl>
-                                                                <Input placeholder="https://..." {...field} />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                            </div>
-                                            {lang === 'en' ? (
-                                                <FormField
-                                                    control={form.control}
-                                                    name="twitterDescription"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel>Twitter Description (English)</FormLabel>
-                                                            <FormControl>
-                                                                <Textarea placeholder="Twitter Description" className="h-20" {...field} />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                            ) : (
-                                                <FormField
-                                                    control={form.control}
-                                                    name="twitterDescription_ar"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormLabel>Twitter Description (Arabic)</FormLabel>
-                                                            <FormControl>
-                                                                <Textarea
-                                                                    placeholder="وصف تويتر"
-                                                                    className="h-20 text-right"
-                                                                    dir="rtl"
-                                                                    {...field}
-                                                                    value={field.value || ''}
-                                                                />
-                                                            </FormControl>
-                                                            <FormMessage />
-                                                        </FormItem>
-                                                    )}
-                                                />
+                                        />
+                                    </div>
+                                    {lang === 'en' ? (
+                                        <FormField
+                                            control={form.control}
+                                            name="twitterDescription"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Twitter Description (English)</FormLabel>
+                                                    <FormControl>
+                                                        <Textarea placeholder="Twitter Description" className="h-20" {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
                                             )}
-                                        </div>
-                                    </CardContent>
-                                </Card>
+                                        />
+                                    ) : (
+                                        <FormField
+                                            control={form.control}
+                                            name="twitterDescription_ar"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Twitter Description (Arabic)</FormLabel>
+                                                    <FormControl>
+                                                        <Textarea
+                                                            placeholder="وصف تويتر"
+                                                            className="h-20 text-right"
+                                                            dir="rtl"
+                                                            {...field}
+                                                            value={field.value || ''}
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    )}
+                                </div>
                             </TabsContent>
                         </Tabs>
 

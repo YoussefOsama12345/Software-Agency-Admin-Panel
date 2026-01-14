@@ -268,7 +268,7 @@ export function RichTextEditor({
     return (
         <TooltipProvider>
             <div className={cn(
-                'relative flex min-h-[300px] w-full flex-col rounded-md border border-input bg-transparent shadow-sm',
+                'relative flex min-h-[300px] w-full flex-col rounded-md border border-input bg-background shadow-sm',
                 className
             )}>
                 <EditorFloatingMenu editor={editor} />
