@@ -8,7 +8,7 @@ import Placeholder from '@tiptap/extension-placeholder';
 import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
 import Highlight from '@tiptap/extension-highlight';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState, useRef } from 'react';
 import {
     Bold,
     Italic,
@@ -43,6 +43,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { LinkComponent } from './LinkComponent';
 
 interface RichTextEditorProps {
     value?: string;
@@ -72,12 +73,12 @@ export function RichTextEditor({
             Link.configure({
                 openOnClick: false,
                 HTMLAttributes: {
-                    class: 'text-primary underline',
+                    class: 'text-primary underline cursor-pointer',
                 },
             }),
             Image.configure({
                 HTMLAttributes: {
-                    class: 'max-w-full h-auto rounded-lg',
+                    class: 'max-w-full h-auto rounded-lg my-4',
                 },
             }),
             Placeholder.configure({
@@ -107,6 +108,10 @@ export function RichTextEditor({
         },
     });
 
+    const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
+    const [linkUrl, setLinkUrl] = useState('');
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
     // Update content when value changes from outside
     useEffect(() => {
         if (editor && value !== editor.getHTML()) {
@@ -114,31 +119,51 @@ export function RichTextEditor({
         }
     }, [value, editor]);
 
+    const handleLinkSave = useCallback(() => {
+        if (!editor) return;
+
+        if (linkUrl === '') {
+            editor.chain().focus().extendMarkRange('link').unsetLink().run();
+        } else {
+            editor.chain().focus().extendMarkRange('link').setLink({ href: linkUrl }).run();
+        }
+        setIsLinkModalOpen(false);
+        setLinkUrl('');
+    }, [editor, linkUrl]);
+
     const addLink = useCallback(() => {
         if (!editor) return;
         const previousUrl = editor.getAttributes('link').href;
-        const url = window.prompt('URL', previousUrl);
+        setLinkUrl(previousUrl || '');
+        setIsLinkModalOpen(true);
+    }, [editor]);
 
-        if (url === null) {
+    const handleFileChange = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file || !editor) return;
+
+        // Basic validation
+        if (!file.type.startsWith('image/')) {
+            alert('Please select an image file');
             return;
         }
 
-        if (url === '') {
-            editor.chain().focus().extendMarkRange('link').unsetLink().run();
-            return;
-        }
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const result = e.target?.result as string;
+            if (result) {
+                editor.chain().focus().setImage({ src: result }).run();
+            }
+        };
+        reader.readAsDataURL(file);
 
-        editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+        // Reset input
+        event.target.value = '';
     }, [editor]);
 
     const addImage = useCallback(() => {
-        if (!editor) return;
-        const url = window.prompt('Image URL');
-
-        if (url) {
-            editor.chain().focus().setImage({ src: url }).run();
-        }
-    }, [editor]);
+        fileInputRef.current?.click();
+    }, []);
 
     if (!editor) {
         return null;
@@ -361,6 +386,23 @@ export function RichTextEditor({
 
                 {/* Editor Content */}
                 <EditorContent editor={editor} />
+
+                {/* Hidden File Input for Image Upload */}
+                <input
+                    type="file"
+                    ref={fileInputRef}
+                    className="hidden"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                />
+
+                {/* Link Modal Component */}
+                <LinkComponent
+                    isOpen={isLinkModalOpen}
+                    initialUrl={linkUrl}
+                    onClose={() => setIsLinkModalOpen(false)}
+                    onSave={handleLinkSave}
+                />
             </div>
         </TooltipProvider>
     );
