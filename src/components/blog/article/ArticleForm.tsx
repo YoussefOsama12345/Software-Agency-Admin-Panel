@@ -12,6 +12,7 @@ import { ConfirmDeleteModal } from '@/components/common/ConfirmDeleteModal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { RichTextEditor } from '@/components/common/RichTextEditor';
 import {
     Form,
     FormControl,
@@ -270,7 +271,11 @@ export function ArticleForm({
                                                     <FormItem>
                                                         <FormLabel>Content (English) *</FormLabel>
                                                         <FormControl>
-                                                            <Textarea placeholder="Write your article content here..." className="min-h-[300px] font-mono" {...field} />
+                                                            <RichTextEditor
+                                                                value={field.value}
+                                                                onChange={field.onChange}
+                                                                placeholder="Write your article content here..."
+                                                            />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -284,12 +289,11 @@ export function ArticleForm({
                                                     <FormItem>
                                                         <FormLabel>Content (Arabic)</FormLabel>
                                                         <FormControl>
-                                                            <Textarea
-                                                                placeholder="اكتب محتوى المقال هنا..."
-                                                                className="min-h-[300px] font-mono text-right"
-                                                                dir="rtl"
-                                                                {...field}
+                                                            <RichTextEditor
                                                                 value={field.value || ''}
+                                                                onChange={field.onChange}
+                                                                placeholder="اكتب محتوى المقال هنا..."
+                                                                dir="rtl"
                                                             />
                                                         </FormControl>
                                                         <FormMessage />
