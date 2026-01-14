@@ -27,8 +27,8 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { CreatePortfolioFormData, createPortfolioSchema } from '@/schemas/portofolio.schema';
+import { RichTextEditor } from '@/components/common/editor/RichTextEditor';
 
 interface PortfolioFormProps {
     defaultValues?: Partial<CreatePortfolioFormData>;
@@ -163,10 +163,11 @@ export function PortfolioForm({
                                     <FormItem>
                                         <FormLabel>Description (English)</FormLabel>
                                         <FormControl>
-                                            <Textarea
+                                            <RichTextEditor
+                                                value={field.value}
+                                                onChange={field.onChange}
                                                 placeholder="Describe the project, technologies used, and key features..."
-                                                className="min-h-[120px]"
-                                                {...field}
+                                                dir="ltr"
                                                 disabled={isLoading}
                                             />
                                         </FormControl>
@@ -182,12 +183,11 @@ export function PortfolioForm({
                                     <FormItem>
                                         <FormLabel>Description (Arabic)</FormLabel>
                                         <FormControl>
-                                            <Textarea
-                                                placeholder="وصف المشروع، التقنيات المستخدمة، والميزات الرئيسية..."
-                                                className="min-h-[120px] text-right"
-                                                dir="rtl"
-                                                {...field}
+                                            <RichTextEditor
                                                 value={field.value || ''}
+                                                onChange={field.onChange}
+                                                placeholder="وصف المشروع، التقنيات المستخدمة، والميزات الرئيسية..."
+                                                dir="rtl"
                                                 disabled={isLoading}
                                             />
                                         </FormControl>

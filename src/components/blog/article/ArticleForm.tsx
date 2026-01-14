@@ -12,7 +12,7 @@ import { ConfirmDeleteModal } from '@/components/common/ConfirmDeleteModal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { RichTextEditor } from '@/components/common/RichTextEditor';
+import { RichTextEditor } from '@/components/common/editor/RichTextEditor';
 import {
     Form,
     FormControl,
@@ -34,6 +34,7 @@ import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
 import { createArticleSchema, CreateArticleFormData, ArticleStatusEnum, LanguageEnum } from '@/schemas/article.schema';
+import { RelatedArticleSelector } from './RelatedArticleSelector';
 
 // Mock categories for now - replace with actual data fetching
 const mockCategories = [
@@ -98,6 +99,7 @@ export function ArticleForm({
             twitterDescription: defaultValues?.twitterDescription || '',
             twitterDescription_ar: defaultValues?.twitterDescription_ar || '',
             twitterImage: defaultValues?.twitterImage || '',
+            relatedArticles: defaultValues?.relatedArticles || [],
         },
     });
 
@@ -292,7 +294,7 @@ export function ArticleForm({
                                                             <RichTextEditor
                                                                 value={field.value || ''}
                                                                 onChange={field.onChange}
-                                                                placeholder="اكتب محتوى المقال هنا..."
+                                                                placeholder="اكتب محتوى المقال بالتفصيل هنا..."
                                                                 dir="rtl"
                                                             />
                                                         </FormControl>
@@ -374,6 +376,26 @@ export function ArticleForm({
                                                     <FormControl>
                                                         <Input placeholder="https://..." {...field} />
                                                     </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+
+                                        <FormField
+                                            control={form.control}
+                                            name="relatedArticles"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Related Articles</FormLabel>
+                                                    <FormControl>
+                                                        <RelatedArticleSelector
+                                                            value={field.value || []}
+                                                            onChange={field.onChange}
+                                                        />
+                                                    </FormControl>
+                                                    <FormDescription>
+                                                        Select articles related to this topic.
+                                                    </FormDescription>
                                                     <FormMessage />
                                                 </FormItem>
                                             )}

@@ -91,6 +91,10 @@ export const createArticleSchema = z.object({
         .max(10, 'Max 10 tags')
         .optional(),
 
+    relatedArticles: z
+        .array(z.string().uuid())
+        .optional(),
+
     metaTitle: z
         .string()
         .max(60, 'Max 60 characters')
@@ -247,6 +251,10 @@ export const updateArticleSchema = z
                     .trim()
             )
             .max(10)
+            .optional(),
+
+        relatedArticles: z
+            .array(z.string().uuid())
             .optional(),
 
         metaTitle: z.string().max(60).trim().optional(),

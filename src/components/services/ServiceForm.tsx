@@ -17,7 +17,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { RichTextEditor } from '@/components/common/editor/RichTextEditor';
 import {
     Select,
     SelectContent,
@@ -142,10 +142,12 @@ export function ServiceForm({
                                         <FormItem>
                                             <FormLabel>Description (English)</FormLabel>
                                             <FormControl>
-                                                <Textarea
-                                                    placeholder="Describe the service..."
-                                                    className="resize-none min-h-[100px]"
-                                                    {...field}
+                                                <RichTextEditor
+                                                    value={field.value}
+                                                    onChange={field.onChange}
+                                                    placeholder="Describe the service in detail..."
+                                                    dir="ltr"
+                                                    disabled={isSubmitting}
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -160,12 +162,12 @@ export function ServiceForm({
                                         <FormItem>
                                             <FormLabel>Description (Arabic)</FormLabel>
                                             <FormControl>
-                                                <Textarea
-                                                    placeholder="وصف الخدمة..."
-                                                    className="resize-none min-h-[100px] text-right"
-                                                    dir="rtl"
-                                                    {...field}
+                                                <RichTextEditor
                                                     value={field.value || ''}
+                                                    onChange={field.onChange}
+                                                    placeholder="صف الخدمة بالتفصيل..."
+                                                    dir="rtl"
+                                                    disabled={isSubmitting}
                                                 />
                                             </FormControl>
                                             <FormMessage />

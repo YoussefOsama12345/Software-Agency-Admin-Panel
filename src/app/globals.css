@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -128,4 +129,122 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* TipTap Editor Styles */
+.tiptap {
+  outline: none;
+}
+
+/* Placeholder styling */
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: hsl(var(--muted-foreground));
+  pointer-events: none;
+  height: 0;
+}
+
+/* Task list checkbox styling */
+.tiptap ul[data-type="taskList"] {
+  list-style: none;
+  padding: 0;
+}
+
+.tiptap ul[data-type="taskList"] li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.tiptap ul[data-type="taskList"] li>label {
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.tiptap ul[data-type="taskList"] li>label input[type="checkbox"] {
+  cursor: pointer;
+  width: 1rem;
+  height: 1rem;
+  accent-color: hsl(var(--primary));
+}
+
+.tiptap ul[data-type="taskList"] li>div {
+  flex: 1;
+}
+
+/* Task list checked state */
+.tiptap ul[data-type="taskList"] li[data-checked="true"]>div {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+
+/* YouTube embed styling */
+.tiptap iframe {
+  border-radius: 0.5rem;
+  width: 100%;
+  aspect-ratio: 16/9;
+}
+
+/* RTL support for lists */
+[dir="rtl"] .tiptap ul,
+[dir="rtl"] .tiptap ol {
+  padding-right: 1rem;
+  padding-left: 0;
+}
+
+[dir="rtl"] .tiptap ul[data-type="taskList"] li {
+  flex-direction: row-reverse;
+}
+
+/* Code block styling */
+.tiptap pre {
+  background-color: hsl(var(--muted));
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.tiptap pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+}
+
+/* Blockquote styling */
+.tiptap blockquote {
+  border-left: 3px solid hsl(var(--primary));
+  padding-left: 1rem;
+  margin-left: 0;
+  background-color: hsl(var(--muted) / 0.5);
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+[dir="rtl"] .tiptap blockquote {
+  border-left: none;
+  border-right: 3px solid hsl(var(--primary));
+  padding-left: 0;
+  padding-right: 1rem;
+  border-radius: 0.25rem 0 0 0.25rem;
+}
+
+/* Focus styling for disabled state */
+.tiptap.ProseMirror[contenteditable="false"] {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
